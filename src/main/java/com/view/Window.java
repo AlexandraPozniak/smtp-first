@@ -9,13 +9,14 @@ public class Window extends JFrame {
     private JLabel JLabel2 = new JLabel();
     private JLabel JLabel3 = new JLabel();
     private JLabel JLabel4 = new JLabel();
-//    private JLabel JLabel5 = new JLabel();
+    private JLabel JLabel5 = new JLabel();
     public static JTextField _from = new JTextField();
     public static JTextField _to = new JTextField();
     public static JTextField _subject = new JTextField();
     public static JTextArea _body = new JTextArea();
     public static JTextField _smtp = new JTextField();
-//    public static JTextField _password = new JTextField();
+//    public static JTextField _login = new JTextField();
+    public static JTextField _password = new JTextField();
     public JList<String> _output = new JList<>();
     JScrollPane _scrollPane = new JScrollPane();
     JScrollPane _scrollPane2 = new JScrollPane();
@@ -39,9 +40,9 @@ public class Window extends JFrame {
         JLabel4.setText("SMTP Server: ");
         getContentPane().add(JLabel4);
         JLabel4.setBounds(12, 120, 84, 12);
-//        JLabel5.setText("Password: ");
-//        getContentPane().add(JLabel5);
-//        JLabel5.setBounds(12, 156, 36, 12);
+        JLabel5.setText("Password: ");
+        getContentPane().add(JLabel5);
+        JLabel5.setBounds(12, 156, 36, 12);
         getContentPane().add(_from);
         _from.setBounds(96, 12, 300, 24);
         getContentPane().add(_to);
@@ -50,8 +51,8 @@ public class Window extends JFrame {
         _subject.setBounds(96, 84, 300, 24);
         getContentPane().add(_smtp);
         _smtp.setBounds(96, 120, 300, 24);
-//        getContentPane().add(_password);
-//        _password.setBounds(96, 156, 300, 24);
+        getContentPane().add(_password);
+        _password.setBounds(96, 156, 300, 24);
         getContentPane().add(_scrollPane2);
         _scrollPane2.setBounds(12, 156, 384, 108);
         _body.setText("Enter your message here.");
@@ -101,7 +102,7 @@ public class Window extends JFrame {
         return _to.getText();
     }
 
-//    public static String getPassword(){ return _password.getText(); }
+    public static String getPassword(){ return _password.getText(); }
 
 
 }
