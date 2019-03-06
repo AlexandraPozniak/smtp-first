@@ -1,5 +1,6 @@
 package com.model;
 
+import com.sun.mail.smtp.SMTPTransport;
 import com.view.Window;
 import javax.swing.*;
 import java.util.*;
@@ -53,20 +54,9 @@ public class Model {
             msg.setSentDate(new Date());
             msg.setText(Window.getBody());
             Transport.send(msg);
-//            Socket s = new Socket(Window.getSMTP(), 25);
-//            _out = new ObjectOutputStream(.getOutputStream());
-//            _in = new BufferedReader(new InputStreamReader(s.getInputStream()));
-//            send(null);
-//            send("HELO" + InetAddress.getLocalHost().getHostAddress());
-//            send("MAIL FROM: " + Window.getFrom());
-//            send("RCPT TO: " + Window.getTo());
-//            send("DATA");
-//            _out.writeObject("Subject: " + Window.getSubject());
-//            _out.writeObject(Window.getBody());
-//            send(".");
-//            _out.close();
-//            _in.close();
-//            s.close();
+//            _model.addElement(Transport.getLastServerResponse());
+//            _model.addElement(props.getProperty("mail.debug"));
+
 
         } catch (MessagingException e) {
             _model.addElement("Error: " + e);

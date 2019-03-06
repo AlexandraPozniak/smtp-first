@@ -27,7 +27,7 @@ public class Window extends JFrame {
     public Window() {
         setTitle("Send Mail");
         getContentPane().setLayout(null);
-        setSize(750, 350);
+        setSize(800, 400);
         JLabel1.setText("From: ");
         getContentPane().add(JLabel1);
         JLabel1.setBounds(12, 12, 36, 12);
@@ -54,18 +54,18 @@ public class Window extends JFrame {
         getContentPane().add(_password);
         _password.setBounds(96, 156, 300, 24);
         getContentPane().add(_scrollPane2);
-        _scrollPane2.setBounds(12, 156, 384, 108);
+        _scrollPane2.setBounds(12, 192, 384, 108);
         _body.setText("Enter your message here.");
         _scrollPane2.getViewport().add(_body);
-        _body.setBounds(0, 0, 381, 105);
+        _body.setBounds(0, 0, 381, 108);
         Send.setText("Send");
         Send.setActionCommand("Send");
         getContentPane().add(Send);
-        Send.setBounds(60, 276, 132, 24);
+        Send.setBounds(60, 316, 120, 24);
         Cancel.setText("Cancel");
         Cancel.setActionCommand("Cancel");
         getContentPane().add(Cancel);
-        Cancel.setBounds(216, 276, 120, 24);
+        Cancel.setBounds(216, 316, 120, 24);
         getContentPane().add(_scrollPane);
         _scrollPane.setBounds(408, 12, 312, 288);
         getContentPane().add(_output);
