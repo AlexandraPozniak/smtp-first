@@ -15,14 +15,12 @@ public class Window extends JFrame {
     public static JTextField _subject = new JTextField();
     public static JTextArea _body = new JTextArea();
     public static JTextField _smtp = new JTextField();
-//    public static JTextField _login = new JTextField();
     public static JTextField _password = new JTextField();
     public JList<String> _output = new JList<>();
     JScrollPane _scrollPane = new JScrollPane();
     JScrollPane _scrollPane2 = new JScrollPane();
     public JButton Send = new JButton();
     public JButton Cancel = new JButton();
-//    Model model;
 
     public Window() {
         setTitle("Send Mail");
