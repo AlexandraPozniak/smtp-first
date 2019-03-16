@@ -1,69 +1,68 @@
 package com.model;
 
-import com.sun.mail.smtp.SMTPTransport;
 import com.view.Window;
+
+import javax.net.ssl.SSLSocket;
+import javax.net.ssl.SSLSocketFactory;
 import javax.swing.*;
-import java.util.*;
-import javax.mail.*;
-import javax.mail.internet.*;
+import java.net.*;
 import java.io.*;
+import java.util.Base64;
 
 public class Model {
     private static DefaultListModel<String> _model = new DefaultListModel<>();
-//    private BufferedReader _in;
-//    private ObjectOutputStream _out;
-    private Properties props = new Properties();
+    private BufferedReader _in;
+    private PrintWriter _out;
 
 
 
-//    private void send(String msg) throws IOException {
-//
-//        if (msg != null) {
-//            _model.addElement("C: " + msg);
-//            _out.writeObject(msg);
-//            _out.flush();
-//        }
-//
-//        String line = _in.readLine();
-//        if (line != null) {
-//            _model.addElement("S: " + line);
-//        }
-//    }
 
+    private void send(String msg) throws IOException {
 
-    public void Send_actionPerformed() {
-        props.put("mail.smtp.host", Window.getSMTP());
-        props.put("mail.smtp.ssl.enable", "true");
-        props.put("mail.smtp.port", "465");
-        props.put("mail.smtp.auth", "true");
-        props.put("mail.debug", "true");
+        if (msg != null) {
+            _model.addElement("C: " + msg);
+            _out.println(msg);
+            _out.flush();
+        }
 
-        Session session = Session.getDefaultInstance(props, new javax.mail.Authenticator() {
-            @Override
-            protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication(Window.getFrom(), Window.getPassword());
-            }
-        });
-        try {
-            Message msg = new MimeMessage(session);
-
-            msg.setFrom(new InternetAddress(Window.getFrom()));
-            InternetAddress[] adres = {new InternetAddress(Window.getTo())};
-            msg.setRecipients(Message.RecipientType.TO, adres);
-            msg.setSubject(Window.getSubject());
-            msg.setSentDate(new Date());
-            msg.setText(Window.getBody());
-            Transport.send(msg);
-//            _model.addElement(Transport.getLastServerResponse());
-//            _model.addElement(props.getProperty("mail.debug"));
-
-
-        } catch (MessagingException e) {
-            _model.addElement("Error: " + e);
-            e.printStackTrace();
+        String line = _in.readLine();
+        if (line != null) {
+            _model.addElement("S: " + line);
         }
     }
 
+
+    public void Send_actionPerformed() {
+        try{
+            InetAddress mailhost = InetAddress.getByName(Window.getSMTP());
+            InetAddress localhost = InetAddress.getLocalHost();
+
+            SSLSocket socket;
+            socket = (SSLSocket)((SSLSocketFactory) SSLSocketFactory.getDefault()).createSocket(mailhost, 465);
+            InputStream in = socket.getInputStream();
+            OutputStream out = socket.getOutputStream();
+            _in = new BufferedReader(new InputStreamReader(in));
+            _out = new PrintWriter(out, true);
+            String login = Base64.getEncoder().encodeToString(Window.getFrom().getBytes());
+            String password = Base64.getEncoder().encodeToString(Window.getPassword().getBytes());
+            send("HELO " + localhost.getHostName());
+            send("AUTH LOGIN " + login);
+            send(password);
+            send("MAIL FROM:<" + Window.getFrom() + ">");
+            send("RCPT TO:<" + Window.getTo() + ">");
+            send("DATA ");
+            _out.println("Subject: " + Window.getSubject());
+            _out.println(Window.getBody());
+            send(".");
+            send("QUIT");
+            socket.close();
+
+
+        } catch (Exception e){
+            _model.addElement("Error: " + e);
+        }
+
+    }
     public static DefaultListModel<String> getList() {
         return _model;
     }
