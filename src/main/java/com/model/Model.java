@@ -36,9 +36,7 @@ public class Model {
         try{
             InetAddress mailhost = InetAddress.getByName(Window.getSMTP());
             InetAddress localhost = InetAddress.getLocalHost();
-
-            SSLSocket socket;
-            socket = (SSLSocket)((SSLSocketFactory) SSLSocketFactory.getDefault()).createSocket(mailhost, 465);
+            SSLSocket socket = (SSLSocket)((SSLSocketFactory) SSLSocketFactory.getDefault()).createSocket(mailhost, 465);
             InputStream in = socket.getInputStream();
             OutputStream out = socket.getOutputStream();
             _in = new BufferedReader(new InputStreamReader(in));
